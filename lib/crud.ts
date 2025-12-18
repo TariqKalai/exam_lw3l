@@ -49,5 +49,5 @@ export async function editEntry(form: FormData) {
 export async function deleteEntry(form: FormData) {
   const id = String(form.get("id"));
   await db.delete(entryTable).where(eq(entryTable.id, id));
-  redirect((await headers()).get("referer") ?? "/");
+  redirect("/");
 }
