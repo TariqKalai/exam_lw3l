@@ -3,17 +3,17 @@
 import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { entryTable } from "../db/schema";
+import { formularytable } from "../db/schema";
 import { db } from ".";
 
 export async function getEntries() {
-  return db.select().from(entryTable);
+  return db.select().from(formularytable);
 }
 export async function getEntryById(idToFind: string) {
   const result = await db
     .select()
-    .from(entryTable)
-    .where(eq(entryTable.id, idToFind))
+    .from(formularytable)
+    .where(eq(formularytable.id, idToFind))
     .limit(1); // Optimization: stop searching after finding one
 
   // Drizzle always returns an array (e.g., [ { entry } ]).
@@ -22,11 +22,11 @@ export async function getEntryById(idToFind: string) {
 }
 
 export async function createEntry(form: FormData) {
-  await db.insert(entryTable).values({
+  await db.insert(formularytable).values({
     name: String(form.get("name")),
     phone: String(form.get("phone")),
     numberPerson: String(form.get("numberPerson")),
-    hour: String(form.get("hour")),
+    date: String(form.get("date")),
   });
   redirect((await headers()).get("referer") ?? "/");
 }
@@ -35,19 +35,19 @@ export async function editEntry(form: FormData) {
   const id = String(form.get("id"));
 
   await db
-    .update(entryTable)
+    .update(formularytable)
     .set({
       name: String(form.get("name")),
       phone: String(form.get("phone")),
       numberPerson: String(form.get("numberPerson")),
-      hour: String(form.get("hour")),
+      date: String(form.get("date")),
     })
-    .where(eq(entryTable.id, id));
+    .where(eq(formularytable.id, id));
   redirect((await headers()).get("referer") ?? "/");
 }
 
 export async function deleteEntry(form: FormData) {
   const id = String(form.get("id"));
-  await db.delete(entryTable).where(eq(entryTable.id, id));
+  await db.delete(formularytable).where(eq(formularytable.id, id));
   redirect("/");
 }

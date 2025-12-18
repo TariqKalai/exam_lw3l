@@ -1,17 +1,26 @@
-import { getEntryById } from "@/lib/crud";
+"use client";
+import { deleteEntry, getEntryById } from "@/lib/crud";
 import { title } from "process";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
+import Formulary_edit from "./Edit";
 
-type FormularyProps = { ids: string };
+type Entry = {
+  // Matches Drizzle uuid().defaultRandom().primaryKey()
+  id: string;
+  name: string;
+  phone: string;
+  numberPerson: string;
+  date: string;
+};
 
-export default async function Formulary_completed({ ids }: FormularyProps) {
+type FormularyProps = { entries: Entry };
+
+export default function Formulary_completed({ entries }: FormularyProps) {
   // Destructure exactly the fields from your Drizzle Schema
-  const entries = await getEntryById(ids);
-  const { id, name, phone, numberPerson, hour } = entries;
-
-  const sectionHeaderClass =
-    "text-2xl font-serif font-bold pb-1 border-b border-gray-300 mt-8 mb-4";
-  const paragraphClass = "text-lg leading-relaxed mb-4 text-gray-800";
+  const { id, name, phone, numberPerson, date } = entries;
+  const [editingId, setEditingId] = useState<string | null>(null);
+  let buttoncolor =
+    "p-1 rounded-xl border border-black bg-white/40 backdrop-blur text-center hover:bg-amber-200 transition";
   return (
     <article className="min-h-screen bg-gray-50 py-10">
       {/* MAIN CONTAINER: Centered, white paper look, subtle shadow */}
@@ -53,10 +62,10 @@ export default async function Formulary_completed({ ids }: FormularyProps) {
           {/* History Section */}
           <section>
             <h2 className="text-2xl font-bold text-gray-800 border-b-2 border-emerald-500 inline-block pb-1 mb-4">
-              Reservation hour :
+              Reservation date :
             </h2>
             <div className="text-lg text-gray-800 leading-relaxed whitespace-pre-wrap">
-              {hour}
+              {date}
             </div>
           </section>
         </div>
@@ -73,6 +82,23 @@ export default async function Formulary_completed({ ids }: FormularyProps) {
             &larr; Back to Home
           </a>
         </div>
+
+        <div className="flex gap-2 mt-2">
+          {/* Delete Button */}
+          <form action={deleteEntry}>
+            <input type="hidden" name="id" value={id} />
+            <button type="submit" className={buttoncolor}>
+              Delete
+            </button>
+          </form>
+
+          {/* Modify Button - Sets the specific ID */}
+          <button onClick={() => setEditingId(id)} className={buttoncolor}>
+            Modify
+          </button>
+        </div>
+
+        {editingId === id && <Formulary_edit entries={entries} />}
       </div>
     </article>
   );
