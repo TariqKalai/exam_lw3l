@@ -49,5 +49,5 @@ export async function editEntry(form: FormData) {
 export async function deleteEntry(form: FormData) {
   const id = String(form.get("id"));
   await db.delete(formularytable).where(eq(formularytable.id, id));
-  redirect("/");
+  redirect("/bookings");
 }

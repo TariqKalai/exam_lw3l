@@ -1,6 +1,5 @@
 export const dynamic = "force-dynamic";
 import Table from "@/components/Table";
-import { getEntries } from "@/lib/crud";
 
 export default async function Page() {
   return (

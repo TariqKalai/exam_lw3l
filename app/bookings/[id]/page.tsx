@@ -8,8 +8,6 @@ type PageProps = {
 export default async function EntryPage({ params }: PageProps) {
   const { id } = await params;
   const entries = await getEntryById(id);
-
-  // 3. RENDER THE PAGE
   return (
     <div>
       <div className="bg-gray-100 min-h-screen py-8">
