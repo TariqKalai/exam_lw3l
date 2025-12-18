@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 
-export default function Cleanbar() {
+export default function Navbar() {
   return (
     <>
       <nav
@@ -16,20 +16,20 @@ export default function Cleanbar() {
           {/* Added 'items-center' and 'gap-6' to space them out */}
           <div className="flex items-center gap-6">
             <h1 className="text-2xl hover:text-3xl font-bold leading-tight">
-              <a href="/">TariqPedia</a>
+              <a href="/">Resto'Tariq</a>
             </h1>
-            <a href="/about" className="hover:underline">
-              About
+            <a href="/bookings" className="hover:underline">
+              bookings
             </a>
           </div>
 
           {/* RIGHT SIDE: Button */}
-          <a
+          {/* <a
             href="/New_entry"
             className="hover:bg-amber-200/20 button border-2 rounded-xl text-center px-4 py-2 mt-4 sm:mt-0"
           >
             New/edit entry
-          </a>
+          </a> */}
         </div>
       </nav>
     </>

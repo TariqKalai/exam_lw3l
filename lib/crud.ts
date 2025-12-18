@@ -13,7 +13,7 @@ export async function getEntryById(idToFind: string) {
   const result = await db
     .select()
     .from(entryTable)
-    .where(eq(entryTable.title, idToFind))
+    .where(eq(entryTable.id, idToFind))
     .limit(1); // Optimization: stop searching after finding one
 
   // Drizzle always returns an array (e.g., [ { entry } ]).
@@ -23,10 +23,10 @@ export async function getEntryById(idToFind: string) {
 
 export async function createEntry(form: FormData) {
   await db.insert(entryTable).values({
-    title: String(form.get("title")),
-    intro: String(form.get("intro")),
-    description: String(form.get("description")),
-    history: String(form.get("history")),
+    name: String(form.get("name")),
+    phone: String(form.get("phone")),
+    numberPerson: String(form.get("numberPerson")),
+    hour: String(form.get("hour")),
   });
   redirect((await headers()).get("referer") ?? "/");
 }
@@ -37,10 +37,10 @@ export async function editEntry(form: FormData) {
   await db
     .update(entryTable)
     .set({
-      title: String(form.get("title")),
-      intro: String(form.get("intro")),
-      description: String(form.get("description")),
-      history: String(form.get("history")),
+      name: String(form.get("name")),
+      phone: String(form.get("phone")),
+      numberPerson: String(form.get("numberPerson")),
+      hour: String(form.get("hour")),
     })
     .where(eq(entryTable.id, id));
   redirect((await headers()).get("referer") ?? "/");

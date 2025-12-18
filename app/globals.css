@@ -1,7 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: linear-gradient(
+    180deg,
+    rgba(232, 146, 146, 1) 0%,
+    rgba(250, 192, 192, 1) 21%,
+    rgba(227, 231, 232, 1) 71%,
+    rgba(245, 245, 245, 1) 100%
+  );
   --foreground: #171717;
 }
 
